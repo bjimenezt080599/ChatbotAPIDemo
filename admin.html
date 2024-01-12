@@ -238,8 +238,8 @@
             });
         }
         async function loadDataTableII() {
-            const membersResponse = await fetch('http://localhost:3000/questions');
-            const members = await membersResponse.json();
+            const questionsResponse = await fetch('http://localhost:3000/questions');
+            const questions = await questionsResponse.json();
 
             const dataTable = document.getElementById('dataTable').querySelector('tbody');
             dataTable.innerHTML = '';
