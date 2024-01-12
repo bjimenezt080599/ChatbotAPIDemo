@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Administration Panel</title>
+    <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+    <h1>Administration Panel</h1>
+    <div>
+        <h2>NewUserTicketList:</h2>
+        <table id="dataTable" class="table">
+            <thead>
+                <tr>
+                    <th>Company ID</th>
+                    <th>Member ID</th>
+                    <th>Display Name</th>
+                    <th>First Name</th>
+                    <th>Surname</th>
+                    <th>Job Title</th>
+                    <th>Department</th>
+                    <th>Primary Site</th>
+                    <th>Secondary Site</th>
+                    <th>Aboriginal</th>
+                    <th>Phone Number</th>
+                    <th>Mobile Number</th>
+                    <th>Gender Pronouns</th>
+                    <th>Replicate Permissions</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <div>
+        <h2>NewUserQuestionList:</h2>
+        <table id="dataTable" class="table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Variable</th>
+                    <th>Question</th>
+                    <th>Input</th>
+                    <th>Required</th>
+                    <th>Condition</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <!--<div class="form-container">
+        <h2>List of Companies:</h2>
+        <ul id="companiesList"></ul>
+
+        <h2>Add New Company:</h2>
+        <div class="form-group">
+            <input type="text" id="companyIdInput" placeholder="Company ID" class="input-field">
+            <input type="text" id="nameInput" placeholder="Company Name" class="input-field">
+            <button onclick="addCompany()" class="submit-button">Add Company</button>
+        </div>
+    </div>
+
+    <div class="form-container">
+        <h2>List of Members:</h2>
+        <ul id="membersList"></ul>
+
+        <h2>Add New Member:</h2>
+        <div class="form-group">
+            <select id="companySelect" class="input-field"></select>
+            <input type="text" id="memberIdInput" placeholder="Member ID" class="input-field">
+            <input type="text" id="displayNameInput" placeholder="Display Name" class="input-field">
+            <input type="text" id="firstNameInput" placeholder="First Name" class="input-field">
+            <input type="text" id="surnameInput" placeholder="Surname" class="input-field">
+            <input type="text" id="jobTitleInput" placeholder="Job Title" class="input-field">
+            <input type="text" id="departmentInput" placeholder="Department" class="input-field">
+            <input type="text" id="primarySiteInput" placeholder="Primary Site" class="input-field">
+            <input type="text" id="secondarySiteInput" placeholder="Secondary Site" class="input-field">
+            <div class="checkbox-group">
+                <input type="checkbox" id="aboriginalInput">
+                <label for="aboriginalInput">Aboriginal</label>
+            </div>
+            <input type="text" id="phoneNumberInput" placeholder="Phone Number" class="input-field">
+            <input type="text" id="mobileNumberInput" placeholder="Mobile Number" class="input-field">
+            <input type="text" id="genderPronounsInput" placeholder="Gender Pronouns" class="input-field">
+            <input type="text" id="replicatePermissionsInput" placeholder="Replicate Permissions" class="input-field">
+            <button onclick="addMember()" class="submit-button">Add Member</button>
+        </div>
+
+    </div>-->
+    <script>
+        async function loadCompanies() {
+            const response = await fetch('http://localhost:3000/companies');
+            const companies = await response.json();
+
+            const companiesList = document.getElementById('companiesList');
+            companiesList.innerHTML = '';
+
+            const companySelect = document.getElementById('companySelect');
+            companySelect.innerHTML = ''; 
+
+            companies.forEach(company => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `<strong> Company ID: </strong> ${company.id} - <strong>Company Name:</strong> ${company.name}`;
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Delete';
+                deleteButton.onclick = () => deleteCompany(company.id);
+                listItem.appendChild(deleteButton);
+                companiesList.appendChild(listItem);
+
+                const option = document.createElement('option');
+                option.value = company.id;
+                option.textContent = `${company.id}`;
+                companySelect.appendChild(option);
+            });
+        }
+        async function loadMembers() {
+            const response = await fetch('http://localhost:3000/members');
+            const members = await response.json();
+            const companiesResponse = await fetch('http://localhost:3000/companies');
+            const companies = await companiesResponse.json();
+        
+            const membersList = document.getElementById('membersList');
+            membersList.innerHTML = '';
+        
+            members.forEach(member => {
+                const listItem = document.createElement('li');
+                const company = companies.find(company => company.id === member.companyId);
+                listItem.innerHTML = `<strong>Company ID:</strong> ${company ? company.id : 'N/A'} - <strong>Member ID:</strong> ${member.id} - <strong>Display Name:</strong> ${member.displayName} `;
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Delete';
+                deleteButton.onclick = () => deleteMember(member.id);
+                listItem.appendChild(deleteButton);
+                membersList.appendChild(listItem);
+            });
+        }
+        
+        async function addCompany() {
+            const companyId = document.getElementById('companyIdInput').value;
+            const name = document.getElementById('nameInput').value;
+
+            const response = await fetch('http://localhost:3000/company', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id: companyId, name })
+            });
+
+            location.reload();
+        }
+
+        async function addMember() {
+            const companyId = document.getElementById('companySelect').value; 
+            const memberId = document.getElementById('memberIdInput').value;
+            const displayName = document.getElementById('displayNameInput').value;
+            const firstName = document.getElementById('firstNameInput').value;
+            const surName = document.getElementById('surnameInput').value;
+            const jobTitle = document.getElementById('jobTitleInput').value;
+            const department = document.getElementById('departmentInput').value;
+            const primarySite = document.getElementById('primarySiteInput').value;
+            const secondarySite = document.getElementById('secondarySiteInput').value;
+            const aboriginal = document.getElementById('aboriginalInput').checked;
+            const phoneNumber = document.getElementById('phoneNumberInput').value;
+            const mobileNumber = document.getElementById('mobileNumberInput').value;
+            const genderPronouns = document.getElementById('genderPronounsInput').value;
+            const replicatePermissions = document.getElementById('replicatePermissionsInput').value;
+
+            const response = await fetch('http://localhost:3000/member', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ companyId, id: memberId, displayName, firstName, surName, jobTitle, department, primarySite, secondarySite, aboriginal, phoneNumber, mobileNumber, genderPronouns, replicatePermissions })
+            });
+
+            location.reload(); 
+        }
+
+        async function deleteCompany(id) {
+            const response = await fetch(`http://localhost:3000/company/${id}`, {
+                method: 'DELETE'
+            });
+
+            location.reload(); 
+        }
+
+        async function deleteMember(id) {
+            const response = await fetch(`http://localhost:3000/member/${id}`, {
+                method: 'DELETE'
+            });
+
+            location.reload(); 
+        }
+        async function editMember(memberId, updatedData) {
+            const response = await fetch(`http://localhost:3000/members/${memberId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updatedData)
+            });
+            if (response.ok) {
+                console.log('Record edited successfully.');
+            } else {
+                console.error('Error editing the record.');
+            }
+        }
+        async function loadDataTable() {
+            const membersResponse = await fetch('http://localhost:3000/members');
+            const members = await membersResponse.json();
+        
+            const companiesResponse = await fetch('http://localhost:3000/companies');
+            const companies = await companiesResponse.json();
+
+            const dataTable = document.getElementById('dataTable').querySelector('tbody');
+            dataTable.innerHTML = '';
+
+            members.forEach(member => {
+                const company = companies.find(company => company.id === member.companyId);
+        
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td>${company ? company.id : 'N/A'}</td>
+                    <td>${member.id}</td>
+                    <td>${member.displayName}</td>
+                    <td>${member.firstName}</td>
+                    <td>${member.surName}</td>
+                    <td>${member.jobTitle}</td>
+                    <td>${member.department}</td>
+                    <td>${member.primarySite}</td>
+                    <td>${member.secondarySite}</td>
+                    <td>${member.aboriginal ? 'Yes' : 'No'}</td>
+                    <td>${member.phoneNumber}</td>
+                    <td>${member.mobileNumber}</td>
+                    <td>${member.genderPronouns}</td>
+                    <td>${member.replicatePermissions}</td>
+                `;
+                dataTable.appendChild(newRow);
+            });
+        }
+        async function loadDataTableII() {
+            const membersResponse = await fetch('http://localhost:3000/questions');
+            const members = await membersResponse.json();
+
+            const dataTable = document.getElementById('dataTable').querySelector('tbody');
+            dataTable.innerHTML = '';
+
+            members.forEach(question => {
+
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td>${question.id}</td>
+                    <td>${question.variable}</td>
+                    <td>${question.quest}</td>
+                    <td>${question.input}</td>
+                    <td>${question.required}</td>
+                    <td>${question.condition}</td>
+                `;
+                dataTable.appendChild(newRow);
+            });
+        }
+        loadCompanies();
+        loadMembers();
+        loadDataTable();
+        loadDataTableII();
+    </script>
+</body>
+</html>

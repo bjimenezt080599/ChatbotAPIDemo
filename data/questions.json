@@ -1,0 +1,10 @@
+[
+    {
+      "Title": "1",
+      "Variable": "DisplayName",
+      "Question": "Write Display Name",
+      "Input": "String",
+      "Required": "TRUE",
+      "Condition": "N/A"
+    }
+  ]

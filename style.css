@@ -1,0 +1,124 @@
+body {
+    font-family: Roboto, sans-serif;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+    color: #333;
+  }
+  
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 36px;
+    border-bottom: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  h2 {
+    text-align: center;
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }
+  
+  ul {
+    list-style-type: auto;
+    padding: 0;
+    display: flex, table-column;
+    justify-content: center;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  li {
+    margin-bottom: 5px;
+    align-items: center;
+  }
+  
+  input[type="text"],
+  select,
+  button {
+    margin-bottom: 10px;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #ffffff;
+  }
+  
+  button {
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centrar elementos en el eje horizontal */
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 50px;
+  }
+
+.checkbox-group {
+    display: flex;
+    align-items: center; /* Alinea los elementos en la misma línea */
+}
+
+.checkbox-group label {
+    margin-left: 5px; /* Espacio entre el checkbox y la etiqueta */
+}
+  .form-group input,
+  .form-group select,
+  .form-group button {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .input-field {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #007bff;
+    color: #000000;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    margin: 0 auto;
+    width: calc(100% - 20px); /* Ancho del 100% menos el padding */
+    max-width: 400px; /* Máximo ancho para los campos */
+    margin-bottom: 10px;
+  }
+  
+ .submit-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #007bff;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    margin: 0 auto;
+    width: calc(100% - 20px); /* Ancho del 100% menos el padding */
+    max-width: 400px; /* Máximo ancho para los campos */
+    margin-bottom: 10px;
+  }
+  .form-container {
+    text-align: center; /* Centrar el contenido del contenedor */
+    margin-bottom: 20px; /* Espaciado entre contenedores */
+}

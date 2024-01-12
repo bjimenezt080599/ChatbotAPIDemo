@@ -1,0 +1,18 @@
+[
+  {
+    "companyId": "COM001",
+    "id": "MEM001",
+    "displayName": "Kilverh Claros",
+    "firstName": "Kilverh",
+    "surName": "Claros",
+    "jobTitle": "Software Developer",
+    "department": "IT",
+    "primarySite": "Bogota",
+    "secondarySite": "N/A",
+    "aboriginal": false,
+    "phoneNumber": "N/A",
+    "mobileNumber": "3202298585",
+    "genderPronouns": "He His",
+    "replicatePermissions": "Brenda Jimenez"
+  }
+]
